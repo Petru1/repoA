@@ -1,0 +1,32 @@
+name: Check Last Changes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-last-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Get last commit hash
+        id: last_commit
+        run: |
+          LAST_COMMIT=$(git log -1 --pretty=%H)
+          echo "::set-output name=commit_hash::$LAST_COMMIT"
+
+      - name: Get last commit message
+        id: last_commit_message
+        run: |
+          LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "::set-output name=commit_message::$LAST_COMMIT_MSG"
+
+      - name: Display last changes
+        run: |
+          echo "Last Commit Hash: ${{ steps.last_commit.outputs.commit_hash }}"
+          echo "Last Commit Message: ${{ steps.last_commit_message.outputs.commit_message }}"
