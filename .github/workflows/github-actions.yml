@@ -14,19 +14,13 @@ jobs:
         with:
           ref: master
 
-      - name: Get last commit hash
-        id: last_commit
+      - name: Get changes
+        id: get_changes
         run: |
-          LAST_COMMIT=$(git log -1 --pretty=%H)
-          echo "::set-output name=commit_hash::$LAST_COMMIT"
+          CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo "::set-output name=changes::$CHANGES"
 
-      - name: Get last commit message
-        id: last_commit_message
-        run: |
-          LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
-          echo "::set-output name=commit_message::$LAST_COMMIT_MSG"
+      - name: Store changes in variable
+        run: | 
+          echo "Changes: ${{ steps.get_changes.outputs.changes }}"
 
-      - name: Display last changes
-        run: |
-          echo "Last Commit Hash: ${{ steps.last_commit.outputs.commit_hash }}"
-          echo "Last Commit Message: ${{ steps.last_commit_message.outputs.commit_message }}"
