@@ -14,13 +14,6 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Get changes
-        id: get_changes
+      - name: Create
         run: |
-          CHANGES=$(git fetch --unshallow origin master && git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          echo "::set-output name=changes::$CHANGES"
-
-      - name: Store changes in variable
-        run: | 
-          echo "Changes: ${{ steps.get_changes.outputs.changes }}"
-
+            gh pr create -B master --repo repoA --title "Automated PR: Update from master" --body "This PR was automatically generated to update based on changes in the master branch." --base "master" --head "auto-update-${LAST_COMMIT}"
