@@ -24,7 +24,7 @@ jobs:
 
       - name: Push branch to other repository
         run: |
-              cd other-repo
+              cd repoB
               git push origin new-branch
 
       - name: Create
