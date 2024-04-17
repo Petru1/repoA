@@ -18,4 +18,4 @@ jobs:
 
       - name: Create
         run: |
-          gh pr create --title "Pull request title" --body "Pull request body"
+            gh pr create -B test --repo Petru1/repoA --title "Automated PR: Update from master" --body "This PR was automatically generated to update based on changes in the master branch." --base "master" --head "auto-update-${LAST_COMMIT}"
