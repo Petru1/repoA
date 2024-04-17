@@ -6,6 +6,8 @@ on:
 jobs:
   check-last-changes:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the built-in GitHub token for authentication
     permissions:
       contents: write
       pull-requests: write
