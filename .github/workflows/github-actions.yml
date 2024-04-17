@@ -17,7 +17,7 @@ jobs:
       - name: Get changes
         id: get_changes
         run: |
-          CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          CHANGES=$(git fetch --unshallow origin master && git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           echo "::set-output name=changes::$CHANGES"
 
       - name: Store changes in variable
