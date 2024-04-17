@@ -16,6 +16,17 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
+      - name: Clone other repository
+        run: |
+             git clone https://github.com/Petru1/repoB.git
+             cd repoB
+             git checkout -b new-branch
+
+      - name: Push branch to other repository
+        run: |
+              cd repoB
+              git push origin new-branch
+
       - name: Create
         run: |
-            gh pr create -B test --repo Petru1/repoA --title "Automated PR: Update from master" --body "This PR was automatically generated to update based on changes in the master branch"
+            gh pr create -B test --repo Petru1/repoB --title "!Automated PR: Update from master" --body "This PR was automatically generated to update based on changes in the master branch"
